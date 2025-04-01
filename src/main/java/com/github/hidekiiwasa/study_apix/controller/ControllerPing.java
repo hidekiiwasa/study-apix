@@ -1,4 +1,4 @@
-package com.github.hidekiiwasa.study_apix;
+package com.github.hidekiiwasa.study_apix.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
