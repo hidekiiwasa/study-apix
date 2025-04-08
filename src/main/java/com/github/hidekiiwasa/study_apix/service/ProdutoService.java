@@ -1,5 +1,8 @@
 package com.github.hidekiiwasa.study_apix.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +22,22 @@ public class ProdutoService {
         produto.setNome(dto.getNome());
 
         return produtoRepository.save(produto);
+    }
+
+    public List<Produto> findAll() {
+        return produtoRepository.findAll();
+    }
+
+    public Optional<Produto> findById(Long id) {
+        return produtoRepository.findById(id);
+    }
+
+    public boolean deleteById(Long id) {
+        if (produtoRepository.existsById(id)) {
+            produtoRepository.deleteById(id);
+            return true;
+        }
+        
+        return false;
     }
 }
