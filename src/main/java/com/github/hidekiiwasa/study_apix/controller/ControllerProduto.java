@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.hidekiiwasa.study_apix.dto.ProdutoRequestCreate;
+import com.github.hidekiiwasa.study_apix.dto.ProdutoRequestUpdate;
+import com.github.hidekiiwasa.study_apix.dto.ProdutoResponse;
 import com.github.hidekiiwasa.study_apix.model.Produto;
 import com.github.hidekiiwasa.study_apix.service.ProdutoService;
 
@@ -33,9 +36,16 @@ public class ControllerProduto {
         return ResponseEntity.status(201).body(produto);
     }
 
-    @PutMapping
-    public ResponseEntity<String> update() {
-        return ResponseEntity.status(200).body("Produto atualizado");
+    @PutMapping("{id}")
+    public ResponseEntity<ProdutoResponse> update(@PathVariable Long id, @RequestBody ProdutoRequestUpdate dto) {
+        return produtoService.update(id, dto)
+                    .map(produto -> {
+                        ProdutoResponse response = new ProdutoResponse();
+                        response.setId(produto.getId());
+                        response.setNome(produto.getNome());
+                        return ResponseEntity.status(200).body(response);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping

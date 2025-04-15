@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.hidekiiwasa.study_apix.dto.ProdutoRequestCreate;
+import com.github.hidekiiwasa.study_apix.dto.ProdutoRequestUpdate;
 import com.github.hidekiiwasa.study_apix.model.Produto;
 import com.github.hidekiiwasa.study_apix.repository.ProdutoRepository;
 
@@ -30,6 +31,16 @@ public class ProdutoService {
 
     public Optional<Produto> findById(Long id) {
         return produtoRepository.findById(id);
+    }
+
+    public Optional<Produto> update(Long id, ProdutoRequestUpdate dto) {
+        produtoRepository.findById(id)
+                            .map(produto -> {
+                                produto.setNome(dto.getNome());
+                                return produtoRepository.save(produto);
+                            });
+        
+        return null;
     }
 
     public boolean deleteById(Long id) {
