@@ -1,9 +1,17 @@
 package com.github.hidekiiwasa.study_apix.dto;
 
+import com.github.hidekiiwasa.study_apix.model.Produto;
+
 public class ProdutoResponse {
     private Long id;
     private String nome;
     
+    public ProdutoResponse toDto(Produto produto) {
+        this.setId(produto.getId());
+        this.setNome(produto.getNome());
+        return this; 
+    }
+
     public Long getId() {
         return id;
     }
